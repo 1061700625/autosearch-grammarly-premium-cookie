@@ -5,7 +5,7 @@
 
 视频教程参见：[5步白嫖免费使用Grammarly Premium高级版[附软件]](https://www.bilibili.com/video/BV1z3411d7C1/)    
 
-目前就爬取了3个网站，大家可以自行添加：
+目前就爬取了3个网站，大家可以自行添加其他网站：
 - linkstricks
 - trytechnical
 - infokik
