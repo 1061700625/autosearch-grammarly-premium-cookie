@@ -8,3 +8,10 @@
 目前就爬取了一个网站，大家可以自行添加。
 
 ![image](https://user-images.githubusercontent.com/31002981/208591934-018d710b-c2ea-40c0-a02f-bc1333099e52.png)
+
+
+
+## TODO：
+
+-   多线程化
+-   爬取更多网站
