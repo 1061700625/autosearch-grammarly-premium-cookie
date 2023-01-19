@@ -21,7 +21,7 @@ def collect_cookies_linkstricks():
         url = f'https://www.linkstricks.com/grammarly-cookies-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
-        except TimeoutError: 
+        except: 
             print('>> 访问超时, 2s后切换下一个链接')
             time.sleep(2)
             continue
@@ -36,7 +36,7 @@ def collect_cookies_trytechnical():
         url = f'https://trytechnical.com/working-grammarly-cookies-hourly-updated-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
-        except TimeoutError: 
+        except: 
             print('>> 访问超时, 2s后切换下一个链接')
             time.sleep(2)
             continue
@@ -51,7 +51,7 @@ def collect_cookies_infokik():
         url = f'https://infokik.com/grammarly-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
-        except TimeoutError: 
+        except: 
             print('>> 访问超时, 2s后切换下一个链接')
             time.sleep(2)
             continue
