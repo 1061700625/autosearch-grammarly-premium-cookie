@@ -1,0 +1,2 @@
+conda activate py39
+pyinstaller -F -i icon.ico search_grammarly_cookie.py
