@@ -44,16 +44,22 @@
 	<body>
 		<div>
 			<h4> Grammarly Premium 高级版 Cookie 定时爬取 </h4>
+			<p> >> 此工具来自【小锋学长生活大爆炸】, 欢迎使用! << </p>
+			<p> >> 此工具仅做学习交流，请勿用于非法用途!! << </p>
+			<p> >> 请不要手动点击“退出登录”，以免Cookie失效，损人不利己!!! << </p>
+			<br/>
 			<p> 页面说明： </p>
 			<p> 1. 后台Python脚本每10分钟更新一次Cookie </p>
 			<p> 2. 更新后Cookie文件存放路径为 => http://xfxuezhang.cn/web/grammarly/cookies/ </p>
 			<p> 3. 点击“复制代码”，即可将Cookie复制到剪切板 </p>
 			<p> 4. 所有代码开源地址： https://github.com/1061700625/autosearch-grammarly-premium-cookie</p>
 			<p> 5. 仅限交流学习，请勿用于非法用途!!! </p>
+
 		</div>
 
-		<hr />
+		<hr/>
 
+		<div class="update_date"> </div>
 		<div class="content"> </div>
 
 		<script>
@@ -97,7 +103,10 @@
 				$.get("./cookies/cookies.txt", function(data){
 					console.log(">> json清单：\n" + data);
 					let json_files_path = data.split('\n');
-					let total = json_files_path.length;
+					let update_date = json_files_path.shift()
+					let total = json_files_path.length-1;
+
+					$(".update_date").text(`当前更新时间：${update_date}`);
 					$.each(json_files_path, function(index, value){
 					     console.log(`>> 当前读取[${index}]：[${value}]`);
 					     $.getJSON(value, function(data){

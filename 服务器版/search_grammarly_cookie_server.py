@@ -115,6 +115,7 @@ def search_valid_cookie():
                 print("写入json文件完成")
     print('>> 该网站的Cookie均已失效')
     with open(f"./cookies/cookies.txt","w+") as f:
+        f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '\n')
         f.write('\n'.join(ck_file_store))
         print("写入list文件完成")
 ##################################################################
