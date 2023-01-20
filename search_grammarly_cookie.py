@@ -75,10 +75,19 @@ def check_grammarly_cookie(cookie):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54',
         'cookie': cookie_convert_j2s(json5.loads(cookie))
     }
-    resp = requests.get(url, headers=headers ,allow_redirects=False)
-    print(resp)
-    return resp.status_code == 200
-
+    retry_cnt = 0
+    retry_max = 5
+    while retry_cnt < retry_max:
+        try:
+            resp = requests.get(url, headers=headers ,allow_redirects=False)
+            print(resp)
+            return resp.status_code == 200
+        except:
+            retry_cnt += 1
+            print(f'失败, 1s后重试...{retry_cnt}/{retry_max}')
+            time.sleep(1)
+    return False
+    
 def user_define_collect_cookies():
     cookies = []
     user_define_functions = [collect_cookies_linkstricks, collect_cookies_trytechnical, collect_cookies_infokik, collect_cookies_xxxx]
