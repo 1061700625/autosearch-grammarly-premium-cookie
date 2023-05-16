@@ -1,3 +1,6 @@
+
+
+
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -5,6 +8,10 @@
 
 		<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 		<style>
+         .dashed-box {
+              border: 1px dashed #ccc;
+              padding: 10px;
+          }
 	        .content{
 	            width: 1000px;
 	            margin: 10px auto;
@@ -42,6 +49,14 @@
 	</head>
 
 	<body>
+		<div class="dashed-box">
+        <p>运行exe或者本网站，可能会存在cookie均失效的时候。一般<b>过段时间再运行</b>就可以了。这里贴心的设置了一个小功能：</p>
+        <p> => 输入你的邮箱，当cookie可以使用时，会通过邮箱的方式通知你！</p>
+        <p> => 为了减少麻烦，每次通知完，邮箱都会清空！若有需要，请重新添加。</p>
+        <input type="text" id="emailInput" name="email" placeholder="输入邮箱，CK可用时通知你">
+        <button onclick="addToMails()">确认添加</button>
+    </div>
+
 		<div>
 			<h4> Grammarly Premium 高级版 Cookie 定时爬取 </h4>
 			<p> >> 此工具来自【小锋学长生活大爆炸】, 欢迎使用! << </p>
@@ -124,7 +139,39 @@
 					});
 				})
 			})
+
+        
+      function addToMails() {
+          var emailInput = document.getElementById("emailInput"); // 获取emailInput元素
+          var email = emailInput.value; // 获取emailInput的值
+      
+          // 检查输入是否为空
+          if (email.trim() === "") {
+            alert("邮箱不能为空");
+              return;
+          }
+      
+          // 发送AJAX请求将邮箱数据发送到服务器，将其保存到mails.txt文件中
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "save_email.php", true);
+          xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  // alert(xhr.responseText); // 显示服务器返回的消息
+                  alert("邮箱添加成功: "+email);
+              }
+          };
+          xhr.send("email=" + encodeURIComponent(email)); // 发送邮箱数据
+      
+          emailInput.value = ""; // 清空输入框
+      }
+
+
+
+
+
 		</script>
 	</body>
 </html>
+
 

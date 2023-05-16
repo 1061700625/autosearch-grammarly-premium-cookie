@@ -1,2 +1,5 @@
-conda activate py39
+conda create -n grammarly python=3.9
+conda activate grammarly
+pip install -r requirements.txt
+
 pyinstaller -F -i icon.ico search_grammarly_cookie.py

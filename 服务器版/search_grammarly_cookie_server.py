@@ -7,6 +7,8 @@ from tqdm import tqdm
 import time
 import shutil
 import os
+import zmail
+
 
 ##################################################################
 def cookie_convert_j2s(cookie_json):
@@ -14,6 +16,30 @@ def cookie_convert_j2s(cookie_json):
     for item in cookie_json:
         str_json += f'{item["name"]}={item["value"]}; '
     return str_json
+
+def email_notification(contents=''):
+    if not os.path.exists("mails.txt"):
+        return
+    # 读取邮箱列表
+    with open("mails.txt", "r") as f:
+        emails = [line.strip() for line in f if line.strip()]
+
+    # 发送邮件
+    for email in emails:
+        subject = "【小锋学长提醒您】Grammarly Cookie已更新"
+        # 邮箱发送方的账号
+        account = ''
+        # 邮箱发送方的密码
+        password = ''
+        try:
+            zmail.server(account,password).send_mail(email,{'subject':subject, 'content_text':contents})
+        except Exception as e: 
+            print(email + ':' + str(e))
+    print('>> 邮件发送完成')
+    os.unlink('mails.txt')
+
+
+
 ##################################################################
 
 ##################################################################
@@ -24,12 +50,12 @@ def collect_cookies_linkstricks():
         url = f'https://www.linkstricks.com/grammarly-cookies-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
+            content = soup.find('code', class_='language-json').string
+            cookies.append(content)
         except: 
             print('>> 访问超时, 2s后切换下一个链接')
             time.sleep(2)
             continue
-        content = soup.find('code', class_='language-json').string
-        cookies.append(content)
     return cookies
 
 def collect_cookies_trytechnical():
@@ -39,12 +65,12 @@ def collect_cookies_trytechnical():
         url = f'https://trytechnical.com/working-grammarly-cookies-hourly-updated-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
+            content = soup.find('pre', class_='wp-block-preformatted').string
+            cookies.append(content)
         except: 
             print('>> 访问超时, 2s后切换下一个链接')
             time.sleep(2)
             continue
-        content = soup.find('pre', class_='wp-block-preformatted').string
-        cookies.append(content)
     return cookies
 
 def collect_cookies_infokik():
@@ -54,12 +80,12 @@ def collect_cookies_infokik():
         url = f'https://infokik.com/grammarly-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
+            content = soup.find('pre', class_='wp-block-code').string
+            cookies.append(content)
         except: 
             print('>> 访问超时, 2s后切换下一个链接')
             time.sleep(2)
             continue
-        content = soup.find('pre', class_='wp-block-code').string
-        cookies.append(content)
     return cookies
 
 def collect_cookies_xxxx():
@@ -113,11 +139,15 @@ def search_valid_cookie():
             with open(f"./cookies/cookie-{i}.json","w+") as f:
                 json.dump(json5.loads('{"ck":' + ck + '}'), f)
                 print("写入json文件完成")
-    print('>> 该网站的Cookie均已失效')
     with open(f"./cookies/cookies.txt","w+") as f:
         f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '\n')
         f.write('\n'.join(ck_file_store))
         print("写入list文件完成")
+
+    if not len(ck_file_store):
+        print('>> 该网站的Cookie均已失效')
+    else:
+        email_notification(f'当前有效Cookie约{len(ck_file_store)}条，可运行软件，或前往：http://xfxuezhang.cn/web/grammarly/')
 ##################################################################
 
 # ------------------------Test------------------------------- #
@@ -130,6 +160,10 @@ def search_valid_cookie():
 print('>> 此工具来自【小锋学长生活大爆炸】, 欢迎使用! <<')
 print('>> 此工具仅做学习交流，请勿用于非法用途!! <<')
 print('>> 请不要手动点击“退出登录”，以免Cookie失效，损人不利己!!! <<')
+print('>> 运行exe或者本网站，可能会存在cookie均失效的时候。一般过段时间再运行就可以了!! <<')
+print('>> Github: https://github.com/1061700625/autosearch-grammarly-premium-cookie <<')
+print('>> 视频教程: https://www.bilibili.com/video/BV1z3411d7C1/ <<')
+
 print()
 
 while True:

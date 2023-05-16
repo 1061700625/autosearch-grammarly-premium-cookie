@@ -108,7 +108,7 @@ def search_valid_cookie():
             print('>> 也可手动复制该Cookie:')
             print(str(ck))
             return ck
-    print('>> 该网站的Cookie均已失效')
+    print('>> 该网站的Cookie均已失效，可以稍后再试~')
     return None
 ##################################################################
 
@@ -122,6 +122,10 @@ def search_valid_cookie():
 print('>> 此工具来自【小锋学长生活大爆炸】, 欢迎使用! <<')
 print('>> 此工具仅做学习交流，请勿用于非法用途!! <<')
 print('>> 请不要手动点击“退出登录”，以免Cookie失效，损人不利己!!! <<')
+print('>> 运行exe或者本网站，可能会存在cookie均失效的时候。一般过段时间再运行就可以了!! <<')
+print('>> Github: https://github.com/1061700625/autosearch-grammarly-premium-cookie <<')
+print('>> 视频教程: https://www.bilibili.com/video/BV1z3411d7C1/ <<')
+print('>> 网页版/通知订阅: http://xfxuezhang.cn/web/grammarly/ <<')
 print()
 search_valid_cookie()
 

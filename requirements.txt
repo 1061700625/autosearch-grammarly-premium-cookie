@@ -1,0 +1,7 @@
+bs4
+json5
+pyperclip
+tqdm
+zmail
+requests
+pyinstaller
