@@ -1,23 +1,52 @@
 <?php
-
+/*
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2023-05-17 18:17:49
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2023-05-17 18:18:38
+ * @FilePath: \undefinedc:\Users\Administrator\Desktop\save_email.php
+ * @Description: è¿™æ˜¯é»˜è®¤è®¾ç½®,è¯·è®¾ç½®`customMade`, æ‰“å¼€koroFileHeaderæŸ¥çœ‹é…ç½® è¿›è¡Œè®¾ç½®: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
   header('Content-Type: text/html; charset=utf-8');
-  
+  // é‚®ç®±åˆ—è¡¨æ–‡ä»¶å
+  $filename = 'mails.txt';
+
   if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['email']; // »ñÈ¡emailµÄÖµ
-    
-    // ¼ì²éÊäÈëÊÇ·ñÎª¿Õ
+    // èŽ·å–emailçš„å€¼
+    $email = $_POST['email'];
+    // æ£€æŸ¥è¾“å…¥æ˜¯å¦ä¸ºç©º
     if (empty($email)) {
         echo  "email is null";
         return;
     }
+    // å®‰å…¨è¿‡æ»¤
+    $email = trim($email);
+    $email = htmlspecialchars($email);
+
+    // æ£€æŸ¥é‚®ç®±æ˜¯å¦å­˜åœ¨äºŽåˆ—è¡¨ä¸­
+    if (file_exists($filename)) {
+        $emails = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if ($emails!==false && in_array($email, $emails)) {
+            echo $email." already exists";
+            return;
+        }
+    }
     
-    // °²È«¹ýÂË
-    $email = trim($email); // È¥³ýÊ×Î²¿Õ¸ñ
-    $email = htmlspecialchars($email); // ×ªÒåÌØÊâ×Ö·û
-    
-    $file = fopen("./mails.txt", "a+"); // ´ò¿ªmails.txtÎÄ¼þÒÔ×·¼Ó·½Ê½Ð´Èë
-    fwrite($file, $email . "\n"); // ½«emailÐ´ÈëÎÄ¼þ£¬²¢Ìí¼Ó»»ÐÐ·û
-    fclose($file); // ¹Ø±ÕÎÄ¼þ
+    // å°†emailä»¥è¿½åŠ æ–¹å¼å†™å…¥æ–‡ä»¶mails.txtï¼Œå¹¶æ·»åŠ æ¢è¡Œç¬¦
+    $file = fopen($filename, "a+");
+    fwrite($file, $email . "\n"); 
+    fclose($file);
     echo  "add success";
+
+    // try {
+    //   // ç»™æˆ‘å‘ä¸ªé€šçŸ¥
+    //   $msg = "ã€grammarlyã€‘æœ‰æ–°é‚®ç®±äº†ï¼š".$email;
+    //   $url = "http://xfxuezhang.cn:9966/QQ/send/friend?target=1061700625&msg=".urlencode($msg);
+    //   file_get_contents($url);
+    //   // echo $url;
+    // } catch (Exception $e) {
+    //     // å¤„ç†å¼‚å¸¸
+    //     echo "An error occurred: " . $e->getMessage();
+    // }
   }
 ?>
