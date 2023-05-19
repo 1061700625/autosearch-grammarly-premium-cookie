@@ -1,0 +1,1 @@
+start cmd /k search_grammarly_cookie.exe
