@@ -4,6 +4,7 @@ import json5
 import pyperclip
 from tqdm import tqdm
 import time
+import lxml  # force import
 
 ##################################################################
 def cookie_convert_j2s(cookie_json):
@@ -21,27 +22,28 @@ def collect_cookies_linkstricks():
         url = f'https://www.linkstricks.com/grammarly-cookies-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
-        except: 
-            print('>> 访问超时, 2s后切换下一个链接')
+            content = soup.find('code', class_='language-json').string
+            cookies.append(content)
+        except Exception as e: 
+            print('>> 访问异常, 2s后切换下一个链接:', e)
             time.sleep(2)
             continue
-        content = soup.find('code', class_='language-json').string
-        cookies.append(content)
     return cookies
 
 def collect_cookies_trytechnical():
+    """该网站目前已失效，不知道什么时候会恢复"""
     print('>> 当前搜索网站为: trytechnical')
     cookies = []
     for i in tqdm(range(1, 4), desc='搜索中...'):
         url = f'https://trytechnical.com/working-grammarly-cookies-hourly-updated-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
-        except: 
-            print('>> 访问超时, 2s后切换下一个链接')
+            content = soup.find('pre', class_='wp-block-preformatted').string
+            cookies.append(content)
+        except Exception as e: 
+            print('>> 访问异常, 2s后切换下一个链接:', e)
             time.sleep(2)
             continue
-        content = soup.find('pre', class_='wp-block-preformatted').string
-        cookies.append(content)
     return cookies
 
 def collect_cookies_infokik():
@@ -51,12 +53,12 @@ def collect_cookies_infokik():
         url = f'https://infokik.com/grammarly-{i}/'
         try:
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
-        except: 
-            print('>> 访问超时, 2s后切换下一个链接')
+            content = soup.find('pre', class_='wp-block-code').string
+            cookies.append(content)
+        except Exception as e: 
+            print('>> 访问异常, 2s后切换下一个链接:', e)
             time.sleep(2)
             continue
-        content = soup.find('pre', class_='wp-block-code').string
-        cookies.append(content)
     return cookies
 
 def collect_cookies_xxxx():
@@ -97,7 +99,7 @@ def user_define_collect_cookies():
 
 def search_valid_cookie():
     cookies = user_define_collect_cookies()
-    print('>> 搜索完毕, 开始检查')
+    print(f'>> 搜索完毕, 开始检查, 共{len(cookies)}条')
     for ck in cookies:
         if check_grammarly_cookie(str(ck)):
             try:
