@@ -52,8 +52,8 @@ def collect_cookies_linkstricks():
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
             content = soup.find('code', class_='language-json').string
             cookies.append(content)
-        except: 
-            print('>> 访问超时, 2s后切换下一个链接')
+        except Exception as e: 
+            print('>> 访问异常, 2s后切换下一个链接:', e)
             time.sleep(2)
             continue
     return cookies
@@ -67,8 +67,8 @@ def collect_cookies_trytechnical():
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
             content = soup.find('pre', class_='wp-block-preformatted').string
             cookies.append(content)
-        except: 
-            print('>> 访问超时, 2s后切换下一个链接')
+        except Exception as e: 
+            print('>> 访问异常, 2s后切换下一个链接:', e)
             time.sleep(2)
             continue
     return cookies
@@ -82,8 +82,8 @@ def collect_cookies_infokik():
             soup = BeautifulSoup(requests.get(url, timeout=10).text, 'lxml')
             content = soup.find('pre', class_='wp-block-code').string
             cookies.append(content)
-        except: 
-            print('>> 访问超时, 2s后切换下一个链接')
+        except Exception as e: 
+            print('>> 访问异常, 2s后切换下一个链接:', e)
             time.sleep(2)
             continue
     return cookies
@@ -126,7 +126,7 @@ def user_define_collect_cookies():
 
 def search_valid_cookie():
     cookies = user_define_collect_cookies()
-    print('>> 搜索完毕, 开始检查')
+    print(f'>> 搜索完毕, 开始检查, 共{len(cookies)}条')
     if os.path.exists('./cookies'):
         print('>> 先清空一下cookies目录')
         shutil.rmtree('./cookies')
