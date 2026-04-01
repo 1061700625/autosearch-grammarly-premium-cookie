@@ -1,6 +1,8 @@
 # autosearch-grammarly-premium-cookie
 免费白嫖使用Grammarly Premium高级版
 
+**该项目已失效**
+
 > 如果运行完显示“cookie均已失效”，**过段时间再运行**就可以了！可能几分钟、几小时、几天。
 
 - 文字教程：[【教程】5步免费白嫖使用Grammarly Premium高级版 [附脚本]](https://blog.csdn.net/sxf1061700625/article/details/128376313)    
